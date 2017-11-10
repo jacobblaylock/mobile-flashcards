@@ -1,5 +1,22 @@
 import { ADD_DECK } from '../actions'
 
+function flashcards (state = deckList, action) {
+  const { type, deck } = action
+  switch (type) {
+    case ADD_DECK :
+      return {
+        ...state,
+        ...deck
+      }
+    default :
+      return state
+  }
+}
+
+export default flashcards
+
+
+
 const deckList = {
   React: {
     title: 'React',
@@ -24,23 +41,3 @@ const deckList = {
     ]
   }
 }
-
-function flashcards (state = deckList, action) {
-  const { type, deck } = action
-  switch (type) {
-    case ADD_DECK :
-      return {
-        ...state,
-        deck: {
-          title: deck
-        }
-      }
-    default :
-      return state
-  }
-}
-
-export default flashcards
-
-
-
