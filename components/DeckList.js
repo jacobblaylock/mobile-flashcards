@@ -1,44 +1,21 @@
 import React, { Component } from 'react'
 import { View, Text } from 'react-native'
 import Deck from './Deck'
-
-const deckList = {
-  React: {
-    title: 'React',
-    questions: [
-      {
-        question: 'What is React?',
-        answer: 'A library for managing user interfaces'
-      },
-      {
-        question: 'Where do you make Ajax requests in React?',
-        answer: 'The componentDidMount lifecycle event'
-      }
-    ]
-  },
-  JavaScript: {
-    title: 'JavaScript',
-    questions: [
-      {
-        question: 'What is a closure?',
-        answer: 'The combination of a function and the lexical environment within which that function was declared.'
-      }
-    ]
-  }
-}
+import { connect } from 'react-redux'
 
 class DeckList extends Component {
 
   render() {
+    const { flashcards } = this.props
 
     return (
       <View>
-        {Object.keys(deckList).map((key) => {
+        {Object.keys(flashcards).map((key) => {
           return (
             <Deck
               key={key}
               title={key}
-              count={deckList[key].questions.length}
+              count={flashcards[key].questions ? flashcards[key].questions.length : 0}
             />
           )
         })}
@@ -48,4 +25,10 @@ class DeckList extends Component {
   }
 }
 
-export default DeckList
+function mapStateToProps(flashcards) {
+  return {
+    flashcards
+  }
+}
+
+export default connect(mapStateToProps)(DeckList)
