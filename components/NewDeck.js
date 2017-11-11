@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-nativ
 import { connect } from 'react-redux'
 import { addDeck } from '../actions'
 import { NavigationActions } from 'react-navigation'
-import { purple } from '../utils/colors'
+import { blue, white, gray } from '../utils/colors'
 
 class NewDeck extends Component {
 
@@ -28,22 +28,21 @@ class NewDeck extends Component {
   render() {
     const { flashcards } = this.props
     console.log(flashcards)
-    console.log(this.props.navigation)
 
     return (
-      <View>
-        <Text>What is the title of your new Deck?</Text>
+      <View style={styles.container}>
+        <Text style={styles.question}>What is the title of your new Deck?</Text>
          <View>
           <TextInput
-            style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+            style={styles.title}
             onChangeText={(newDeckTitle) => this.setState({newDeckTitle})}
             value={this.state.newDeckTitle}
           />
           <TouchableOpacity
-            style={styles.androidSubmitBtn}
+            style={styles.submitBtn}
             onPress={this.addDeck}
           >            
-            <Text>Add Deck</Text>
+            <Text style={styles.submitBtnText}>Add Deck</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -52,16 +51,34 @@ class NewDeck extends Component {
 }
 
 const styles = StyleSheet.create({
-  androidSubmitBtn: {
-    backgroundColor: purple,
+  container: {
+    flex: 1,
+    padding: 10
+  },
+  title: {
+    height: 40,
+    backgroundColor: white,
+    borderColor: gray, 
+    borderWidth: 1
+  },  
+  question: {
+    fontSize: 20,
+    margin: 3
+  },
+  submitBtn: {
+    backgroundColor: blue,
     padding: 10,    
     paddingLeft: 30,
     paddingRight: 30,
+    marginTop: 10,
     height: 45,
     borderRadius: 2,
-    alignSelf: 'flex-end',
+    alignSelf: 'center',
     justifyContent: 'center'
-  }  
+  },
+  submitBtnText: {
+    color: white
+  } 
 })
 
 function mapStateToProps(flashcards) {

@@ -7,7 +7,7 @@ import { TabNavigator, StackNavigator } from 'react-navigation'
 import { FontAwesome } from '@expo/vector-icons'
 import DeckList from './components/DeckList'
 import NewDeck from './components/NewDeck'
-import { white, purple } from './utils/colors'
+import { white, blue } from './utils/colors'
 
 const Tabs = TabNavigator({
   DeckList: {
@@ -31,7 +31,7 @@ const Tabs = TabNavigator({
     activeTintColor: white,
     style: {
       height: 56,
-      backgroundColor: purple,
+      backgroundColor: blue,
       shadowColor: 'rgba(0, 0, 0, 0.24)',
       shadowOffset: {
         width: 0,
