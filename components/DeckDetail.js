@@ -1,15 +1,17 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
+import { connect } from 'react-redux'
 import { gray, white } from '../utils/colors'
 
-class Deck extends Component {
+class DeckDetail extends Component {
   render () {
-    const { title, count } = this.props
+    const { deck } = this.props
+    console.log(deck)
 
     return (
       <View style={styles.container}>
-          <Text style={styles.title}>{title}</Text>
-          <Text style={styles.count}>{count} Cards</Text>
+          <Text style={styles.title}>{deck.title}</Text>
+          <Text style={styles.count}>{deck.questions ? deck.questions.length : 0} Cards</Text>
       </View>
     )
   }
@@ -30,7 +32,15 @@ const styles = StyleSheet.create({
   count: {
     color: gray,
     fontSize: 20
-  }
+  }  
 })
 
-export default Deck
+function mapStateToProps (flashcards, { navigation }) {
+  const { deckKey } = navigation.state.params
+ 
+  return {
+    deck: flashcards[deckKey]
+  }
+}
+
+export default connect(mapStateToProps)(DeckDetail)

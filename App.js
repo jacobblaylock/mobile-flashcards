@@ -7,6 +7,7 @@ import { TabNavigator, StackNavigator } from 'react-navigation'
 import { FontAwesome } from '@expo/vector-icons'
 import DeckList from './components/DeckList'
 import NewDeck from './components/NewDeck'
+import DeckDetail from './components/DeckDetail'
 import { white, blue } from './utils/colors'
 
 const Tabs = TabNavigator({
@@ -46,6 +47,15 @@ const Tabs = TabNavigator({
 const MainNavigator = StackNavigator({
   Home: {
     screen: Tabs
+  },
+  DeckDetail: {
+    screen: DeckDetail,
+    navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: blue
+      }
+    }
   }
 })
 

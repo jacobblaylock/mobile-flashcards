@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import Deck from './Deck'
 import { connect } from 'react-redux'
 
@@ -7,18 +7,24 @@ class DeckList extends Component {
 
   render() {
     const { flashcards } = this.props
-    console.log(flashcards)
 
     return (
       <View style={styles.container}>
         {Object.keys(flashcards).map((key) => {
           return (
-            <Deck
-              style={styles.deck}
+            <TouchableOpacity
               key={key}
-              title={key}
-              count={flashcards[key].questions ? flashcards[key].questions.length : 0}
-            />
+              onPress={() => this.props.navigation.navigate(
+                'DeckDetail',
+                { deckKey: key }
+            )}
+            >            
+              <Deck
+                style={styles.deck}
+                title={key}
+                count={flashcards[key].questions ? flashcards[key].questions.length : 0}
+              />
+            </TouchableOpacity>
           )
         })}
       </View>
