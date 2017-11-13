@@ -1,51 +1,57 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
-import { addDeck } from '../actions'
+import { addQuestion } from '../actions'
 import { NavigationActions } from 'react-navigation'
 import { blue, white, gray } from '../utils/colors'
 
-class NewDeck extends Component {
+class NewQuestion extends Component {
 
   state = {
-    newDeckTitle: ''
+    newQuestion: '',
+    newAnswer: ''
   }
 
-  addDeck = () => {
-    this.props.createDeck({
-      [this.state.newDeckTitle]: {
-        title: this.state.newDeckTitle
-      }
-    })
-
-    this.props.navigation.navigate(
-      'DeckDetail',
-      { deckKey: this.state.newDeckTitle }
-    )    
+  addQuestion = () => {
+    this.props.createQuestion({
+      question: this.state.newQuestion,
+      answer: this.state.newAnswer
+    },
+      this.props.deckKey
+    )
 
     this.setState({
-      newDeckTitle: ''
+      newQuestion: '',
+      newAnswer: ''
     })
+
+    this.props.navigation.goBack()
 
   }
 
   render() {
-    const { flashcards } = this.props
+    const { deck } = this.props
+    console.log(deck)
 
     return (
       <View style={styles.container}>
-        <Text style={styles.question}>What is the title of your new Deck?</Text>
+        <Text style={styles.question}>Enter your new Question and Answer.</Text>
          <View>
           <TextInput
-            style={styles.title}
-            onChangeText={(newDeckTitle) => this.setState({newDeckTitle})}
-            value={this.state.newDeckTitle}
+            style={styles.input}
+            onChangeText={(newQuestion) => this.setState({newQuestion})}
+            value={this.state.newQuestion}
           />
+          <TextInput
+            style={styles.input}
+            onChangeText={(newAnswer) => this.setState({newAnswer})}
+            value={this.state.newAnswer}
+          />          
           <TouchableOpacity
             style={styles.submitBtn}
-            onPress={this.addDeck}
+            onPress={this.addQuestion}
           >            
-            <Text style={styles.submitBtnText}>Add Deck</Text>
+            <Text style={styles.submitBtnText}>Add Question</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -58,7 +64,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10
   },
-  title: {
+  input: {
     height: 40,
     backgroundColor: white,
     borderColor: gray, 
@@ -85,15 +91,17 @@ const styles = StyleSheet.create({
 })
 
 function mapStateToProps(flashcards) {
+  const deckKey = 'React'
   return {
-    flashcards
+    deck: flashcards[deckKey],
+    deckKey
   }
 }
 
 function mapDispatchToProps (dispatch) {
   return {
-    createDeck: (deck) => dispatch(addDeck(deck))      
+    createQuestion: (question, deckKey) => dispatch(addQuestion(question, deckKey))      
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewDeck)
+export default connect(mapStateToProps, mapDispatchToProps)(NewQuestion)

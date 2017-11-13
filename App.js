@@ -8,6 +8,7 @@ import { FontAwesome } from '@expo/vector-icons'
 import DeckList from './components/DeckList'
 import NewDeck from './components/NewDeck'
 import DeckDetail from './components/DeckDetail'
+import NewQuestion from './components/NewQuestion'
 import { white, blue } from './utils/colors'
 
 const Tabs = TabNavigator({
@@ -56,7 +57,16 @@ const MainNavigator = StackNavigator({
         backgroundColor: blue
       }
     }
-  }
+  },
+  NewQuestion: {
+    screen: NewQuestion,
+    navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: blue
+      }
+    }
+  }  
 })
 
 export default class App extends React.Component {
