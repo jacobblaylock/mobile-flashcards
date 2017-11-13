@@ -18,11 +18,16 @@ class NewDeck extends Component {
       }
     })
 
+    this.props.navigation.navigate(
+      'DeckDetail',
+      { deckKey: this.state.newDeckTitle }
+    )    
+
     this.setState({
       newDeckTitle: ''
     })
 
-    this.props.navigation.dispatch(NavigationActions.back())
+    // this.props.navigation.dispatch(NavigationActions.back())
   }
 
   render() {
