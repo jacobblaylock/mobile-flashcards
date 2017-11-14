@@ -2,6 +2,8 @@ import { ADD_DECK, ADD_QUESTION } from '../actions'
 
 function flashcards (state = deckList, action) {
   const { type, deck, question, deckKey } = action
+  console.log(deckKey)
+  console.log(question)
   switch (type) {
     case ADD_DECK :
       return {
@@ -9,17 +11,16 @@ function flashcards (state = deckList, action) {
         ...deck
       }
     case ADD_QUESTION :
-      return state
-      // {
-      //   ...state,
-      //   [deckKey]: {
-      //     ...state[deckKey],
-      //     questions: [
-      //       ...state[deckKey].questions,
-      //       ...question
-      //     ]
-      //   }
-      // }
+      return {
+        ...state,
+        [deckKey]: {
+          ...state[deckKey],
+          questions: [
+            ...state[deckKey].questions,
+            question
+          ]
+        }
+      }
     default :
       return state
   }
