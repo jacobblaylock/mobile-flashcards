@@ -12,6 +12,13 @@ class DeckDetail extends Component {
     )
   }
 
+  toStartQuiz = () => {
+    this.props.navigation.navigate(
+      'Quiz',
+      { questions: this.props.deck.questions }
+    )
+  }  
+
   render () {
     const { deck } = this.props
     console.log(deck)
@@ -28,7 +35,7 @@ class DeckDetail extends Component {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.submitBtn}
-            onPress={this.toAddQuestion}
+            onPress={this.toStartQuiz}
           >            
             <Text style={styles.submitBtnText}>Start Quiz</Text>
           </TouchableOpacity>          
@@ -36,6 +43,17 @@ class DeckDetail extends Component {
     )
   }
 }
+
+function mapStateToProps ({ flashcards }, { navigation }) {
+  const { deckKey } = navigation.state.params
+ 
+  return {
+    deck: flashcards[deckKey],
+    deckKey
+  }
+}
+
+export default connect(mapStateToProps)(DeckDetail)
 
 const styles = StyleSheet.create({
   container: {
@@ -70,14 +88,3 @@ const styles = StyleSheet.create({
     color: white
   }   
 })
-
-function mapStateToProps (flashcards, { navigation }) {
-  const { deckKey } = navigation.state.params
- 
-  return {
-    deck: flashcards[deckKey],
-    deckKey
-  }
-}
-
-export default connect(mapStateToProps)(DeckDetail)

@@ -1,21 +1,31 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
-import { gray, white } from '../utils/colors'
+import { connect } from 'react-redux'
+import { gray, white, blue } from '../utils/colors'
 
-class Deck extends Component {
+class Quiz extends Component {
   render () {
-    const { title, count } = this.props
+
 
     return (
       <View style={styles.container}>
-          <Text style={styles.title}>{title}</Text>
-          <Text style={styles.count}>{count} Cards</Text>
+          <Text style={styles.title}>Questions {JSON.stringify(this.props.questions)}</Text>
       </View>
     )
   }
 }
 
-export default Deck
+function mapStateToProps ({ flashcards }, { navigation }) {
+  const { questions } = navigation.state.params
+ 
+  return {
+    questions
+  }
+}
+
+
+export default connect(mapStateToProps)(Quiz)
+
 
 const styles = StyleSheet.create({
   container: {

@@ -9,6 +9,7 @@ import DeckList from './components/DeckList'
 import NewDeck from './components/NewDeck'
 import DeckDetail from './components/DeckDetail'
 import NewQuestion from './components/NewQuestion'
+import Quiz from './components/Quiz'
 import { white, blue } from './utils/colors'
 
 const Tabs = TabNavigator({
@@ -66,7 +67,16 @@ const MainNavigator = StackNavigator({
         backgroundColor: blue
       }
     }
-  }  
+  } ,
+  Quiz: {
+    screen: Quiz,
+    navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: blue
+      }
+    }
+  }     
 })
 
 export default class App extends React.Component {

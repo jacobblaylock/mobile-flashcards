@@ -54,6 +54,20 @@ class NewDeck extends Component {
   }
 }
 
+function mapStateToProps({ flashcards }) {
+  return {
+    flashcards
+  }
+}
+
+function mapDispatchToProps (dispatch) {
+  return {
+    createDeck: (deck) => dispatch(addDeck(deck))      
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewDeck)
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -84,17 +98,3 @@ const styles = StyleSheet.create({
     color: white
   } 
 })
-
-function mapStateToProps(flashcards) {
-  return {
-    flashcards
-  }
-}
-
-function mapDispatchToProps (dispatch) {
-  return {
-    createDeck: (deck) => dispatch(addDeck(deck))      
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(NewDeck)

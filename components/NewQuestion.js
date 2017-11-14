@@ -58,6 +58,23 @@ class NewQuestion extends Component {
   }
 }
 
+function mapStateToProps({ flashcards }, { navigation }) {
+  const { deckKey } = navigation.state.params
+  console.log(deckKey)
+  return {
+    deck: flashcards[deckKey],
+    deckKey
+  }
+}
+
+function mapDispatchToProps (dispatch) {
+  return {
+    createQuestion: (question, deckKey) => dispatch(addQuestion(question, deckKey))      
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewQuestion)
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -88,20 +105,3 @@ const styles = StyleSheet.create({
     color: white
   } 
 })
-
-function mapStateToProps(flashcards, { navigation }) {
-  const { deckKey } = navigation.state.params
-  console.log(deckKey)
-  return {
-    deck: flashcards[deckKey],
-    deckKey
-  }
-}
-
-function mapDispatchToProps (dispatch) {
-  return {
-    createQuestion: (question, deckKey) => dispatch(addQuestion(question, deckKey))      
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(NewQuestion)

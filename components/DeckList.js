@@ -8,6 +8,7 @@ class DeckList extends Component {
   render() {
     const { flashcards } = this.props
 
+
     return (
       <View style={styles.container}>
         {Object.keys(flashcards).map((key) => {
@@ -32,6 +33,14 @@ class DeckList extends Component {
   }
 }
 
+function mapStateToProps({ flashcards }) {
+  return {
+    flashcards
+  }
+}
+
+export default connect(mapStateToProps)(DeckList)
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -41,11 +50,3 @@ const styles = StyleSheet.create({
     marginLeft: 20
   }
 })
-
-function mapStateToProps(flashcards) {
-  return {
-    flashcards
-  }
-}
-
-export default connect(mapStateToProps)(DeckList)
