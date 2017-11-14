@@ -26,6 +26,12 @@ class DeckDetail extends Component {
           >            
             <Text style={styles.submitBtnText}>Add Question</Text>
           </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.submitBtn}
+            onPress={this.toAddQuestion}
+          >            
+            <Text style={styles.submitBtnText}>Start Quiz</Text>
+          </TouchableOpacity>          
       </View>
     )
   }
@@ -54,9 +60,11 @@ const styles = StyleSheet.create({
     paddingRight: 30,
     marginTop: 10,
     height: 45,
+    width: 180,
     borderRadius: 2,
     alignSelf: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   submitBtnText: {
     color: white

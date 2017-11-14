@@ -14,7 +14,8 @@ class NewDeck extends Component {
   addDeck = () => {
     this.props.createDeck({
       [this.state.newDeckTitle]: {
-        title: this.state.newDeckTitle
+        title: this.state.newDeckTitle,
+        questions: []
       }
     })
 

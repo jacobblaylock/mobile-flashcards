@@ -31,7 +31,6 @@ class NewQuestion extends Component {
 
   render() {
     const { deck } = this.props
-    console.log(deck)
 
     return (
       <View style={styles.container}>
@@ -90,8 +89,9 @@ const styles = StyleSheet.create({
   } 
 })
 
-function mapStateToProps(flashcards) {
-  const deckKey = 'React'
+function mapStateToProps(flashcards, { navigation }) {
+  const { deckKey } = navigation.state.params
+  console.log(deckKey)
   return {
     deck: flashcards[deckKey],
     deckKey
