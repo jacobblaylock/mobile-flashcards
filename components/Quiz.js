@@ -1,15 +1,72 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 import { gray, white, blue } from '../utils/colors'
 
 class Quiz extends Component {
-  render () {
+  state = {
+    index: 0,
+    showAnswer: false
+  }
 
+  viewAnswer = () => {
+    this.setState((prevState) => ({
+      ...prevState,
+      showAnswer: !prevState.showAnswer
+    }))
+  }
+
+  correct = () => {
+    // Update Store
+
+    this.setState((prevState) => ({
+      index: prevState.index + 1,
+      showAnswer: !prevState.showAnswer
+    }))
+  }
+
+  incorrect = () => {
+    // Update Store
+
+    this.setState((prevState) => ({
+      index: prevState.index + 1,
+      showAnswer: !prevState.showAnswer
+    }))
+  }  
+
+  render () {
+    const { questions } = this.props
 
     return (
       <View style={styles.container}>
-          <Text style={styles.title}>Questions {JSON.stringify(this.props.questions)}</Text>
+        {!this.state.showAnswer
+          ? 
+            <View>
+              <Text style={styles.title}>Question #{this.state.index + 1}: {questions[this.state.index].question}</Text>
+              <TouchableOpacity
+                style={styles.submitBtn}
+                onPress={this.viewAnswer}
+              >            
+                <Text style={styles.submitBtnText}>View Answer</Text>
+              </TouchableOpacity>
+            </View>            
+          : 
+            <View>
+              <Text style={styles.title}>Answer #{this.state.index + 1}: {questions[this.state.index].answer}</Text>
+              <TouchableOpacity
+                style={styles.submitBtn}
+                onPress={this.correct}
+              >            
+                <Text style={styles.submitBtnText}>Correct</Text>
+              </TouchableOpacity>       
+              <TouchableOpacity
+                style={styles.submitBtn}
+                onPress={this.incorrect}
+              >            
+                <Text style={styles.submitBtnText}>Incorrect</Text>
+              </TouchableOpacity>                     
+            </View>
+        }
       </View>
     )
   }
@@ -39,8 +96,18 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30
   },
-  count: {
-    color: gray,
-    fontSize: 20
-  }
+  submitBtn: {
+    backgroundColor: blue,
+    padding: 10,    
+    paddingLeft: 30,
+    paddingRight: 30,
+    marginTop: 10,
+    height: 45,
+    borderRadius: 2,
+    alignSelf: 'center',
+    justifyContent: 'center'
+  },
+  submitBtnText: {
+    color: white
+  }   
 })
