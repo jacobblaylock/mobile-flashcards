@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
+import { createQuiz } from '../actions'
 import { gray, white, blue } from '../utils/colors'
 
 class DeckDetail extends Component {
@@ -13,9 +14,10 @@ class DeckDetail extends Component {
   }
 
   toStartQuiz = () => {
+    this.props.createQuiz(this.props.deck.questions)
+
     this.props.navigation.navigate(
-      'Quiz',
-      { questions: this.props.deck.questions }
+      'Quiz'
     )
   }  
 
@@ -53,7 +55,13 @@ function mapStateToProps ({ flashcards }, { navigation }) {
   }
 }
 
-export default connect(mapStateToProps)(DeckDetail)
+function mapDispatchToProps (dispatch) {
+  return {
+    createQuiz: (questions) => dispatch(createQuiz(questions))      
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DeckDetail)
 
 const styles = StyleSheet.create({
   container: {

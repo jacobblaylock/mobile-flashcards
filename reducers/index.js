@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { ADD_DECK, ADD_QUESTION, CREATE_QUIZ } from '../actions'
+import { ADD_DECK, ADD_QUESTION, CREATE_QUIZ, UPDATE_SCORE } from '../actions'
 
 const deckList = {
   React: {
@@ -61,7 +61,15 @@ function quiz (state = initialQuizState, action) {
 
   switch(type){
     case CREATE_QUIZ :
-      return questions
+      return {
+        questions: questions,
+        score: 0
+      }
+    case UPDATE_SCORE :
+      return {
+        ...state,
+        score: state.score + 1
+      }
     default :
       return state
   }

@@ -1,6 +1,7 @@
 export const ADD_DECK = 'ADD_DECK'
 export const ADD_QUESTION = 'ADD_QUESTION'
 export const CREATE_QUIZ = 'CREATE_QUIZ'
+export const UPDATE_SCORE = 'UPDATE_SCORE'
 
 export function addDeck (deck) {
   return {
@@ -21,5 +22,11 @@ export function createQuiz (questions) {
   return {
     type: 'CREATE_QUIZ',
     questions
+  }
+}
+
+export function updateScore () {
+  return {
+    type: 'UPDATE_SCORE'
   }
 }
