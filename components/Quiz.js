@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
-import { updateScore } from '../actions'
+import { updateScore, createQuiz } from '../actions'
 import { gray, white, blue } from '../utils/colors'
 
 class Quiz extends Component {
@@ -33,6 +33,20 @@ class Quiz extends Component {
     }))
   }  
 
+  restartQuiz = () => {
+    this.props.createQuiz(this.props.questions)
+    this.setState({
+      index: 0,
+      showAnswer: false
+    })
+  }
+
+  goBack = () => {
+    this.props.navigation.goBack()
+  }
+
+
+
   render () {
     const { questions, score } = this.props
 
@@ -41,6 +55,18 @@ class Quiz extends Component {
         <View style={styles.container}>
           <Text style={styles.title}>Your Final Score is:</Text>
           <Text style={styles.score}>{score} out of {questions.length}</Text>
+          <TouchableOpacity
+            style={styles.submitBtn}
+            onPress={this.restartQuiz}
+          >            
+            <Text style={styles.submitBtnText}>Restart Quiz</Text>
+          </TouchableOpacity>          
+          <TouchableOpacity
+            style={styles.submitBtn}
+            onPress={this.goBack}
+          >            
+            <Text style={styles.submitBtnText}>Back to Deck</Text>
+          </TouchableOpacity>          
         </View>
       )
     }
@@ -51,6 +77,7 @@ class Quiz extends Component {
             ? 
               <View>
                 <Text style={styles.title}>Question #{this.state.index + 1}: {questions[this.state.index].question}</Text>
+                <Text>{questions.length - this.state.index} questions left.</Text>
                 <TouchableOpacity
                   style={styles.submitBtn}
                   onPress={this.viewAnswer}
@@ -90,7 +117,8 @@ function mapStateToProps ({ quiz }) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    updateScore: () => dispatch(updateScore())      
+    updateScore: () => dispatch(updateScore()),
+    createQuiz: (questions) => dispatch(createQuiz(questions))     
   }
 }
 
@@ -120,9 +148,11 @@ const styles = StyleSheet.create({
     paddingRight: 30,
     marginTop: 10,
     height: 45,
+    width: 180,    
     borderRadius: 2,
     alignSelf: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    alignItems: 'center'    
   },
   submitBtnText: {
     color: white
