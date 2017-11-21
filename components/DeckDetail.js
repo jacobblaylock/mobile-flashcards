@@ -1,10 +1,20 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, Animated } from 'react-native'
 import { connect } from 'react-redux'
 import { createQuiz } from '../actions'
 import { gray, white, blue } from '../utils/colors'
 
 class DeckDetail extends Component {
+  state = {
+    marginTop: new Animated.Value(500)
+  }
+
+  componentDidMount () {
+    const { marginTop } = this.state
+
+    Animated.spring(marginTop, { toValue: 10, speed: 3 })
+      .start()
+  }
 
   toAddQuestion = () => {
     this.props.navigation.navigate(
@@ -23,10 +33,10 @@ class DeckDetail extends Component {
 
   render () {
     const { deck } = this.props
-    console.log(deck)
+    const { marginTop } = this.state
 
     return (
-      <View style={styles.container}>
+      <Animated.View style={[styles.container, { marginTop }]}>
           <Text style={styles.title}>{deck.title}</Text>
           <Text style={styles.count}>{deck.questions ? deck.questions.length : 0} Cards</Text>
           <TouchableOpacity
@@ -41,7 +51,7 @@ class DeckDetail extends Component {
           >            
             <Text style={styles.submitBtnText}>Start Quiz</Text>
           </TouchableOpacity>          
-      </View>
+      </Animated.View>
     )
   }
 }

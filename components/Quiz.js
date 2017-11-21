@@ -77,7 +77,6 @@ class Quiz extends Component {
             ? 
               <View>
                 <Text style={styles.title}>Question #{this.state.index + 1}: {questions[this.state.index].question}</Text>
-                <Text>{questions.length - this.state.index} questions left.</Text>
                 <TouchableOpacity
                   style={styles.submitBtn}
                   onPress={this.viewAnswer}
@@ -102,6 +101,7 @@ class Quiz extends Component {
                 </TouchableOpacity>                     
               </View>
           }
+          <Text style={styles.score}>{questions.length - this.state.index} questions left.</Text>
       </View>
     )
   }
