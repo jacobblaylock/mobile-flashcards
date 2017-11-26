@@ -1,15 +1,18 @@
 import React from 'react'
 import { StyleSheet, Text, View, Platform } from 'react-native'
 import { Provider } from 'react-redux'
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
+import thunk from 'redux-thunk'
 import reducer from './reducers'
 import { TabNavigator, StackNavigator } from 'react-navigation'
 import { FontAwesome } from '@expo/vector-icons'
+
 import DeckList from './components/DeckList'
 import NewDeck from './components/NewDeck'
 import DeckDetail from './components/DeckDetail'
 import NewQuestion from './components/NewQuestion'
 import Quiz from './components/Quiz'
+
 import { white, blue } from './utils/colors'
 
 const Tabs = TabNavigator({
@@ -82,7 +85,7 @@ const MainNavigator = StackNavigator({
 export default class App extends React.Component {
   render() {
     return (
-      <Provider store={createStore(reducer)}>
+      <Provider store={createStore(reducer, applyMiddleware(thunk))}>
         <View style={styles.container}>
           <Text style={{height: 20}}>testing</Text>
           <MainNavigator/>

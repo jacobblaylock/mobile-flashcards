@@ -1,33 +1,38 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
-import { addDeck } from '../actions'
+import { putDeck, deckAdded } from '../actions'
 import { NavigationActions } from 'react-navigation'
 import { blue, white, gray } from '../utils/colors'
 
 class NewDeck extends Component {
-
   state = {
     newDeckTitle: ''
   }
 
+  componentWillReceiveProps (nextProps) {
+    console.log(nextProps)
+    if(nextProps.async.deckAdded){
+      this.props.navigation.navigate(
+        'DeckDetail',
+        { deckKey: this.state.newDeckTitle }
+      )    
+  
+      this.setState({
+        newDeckTitle: ''
+      })
+  
+      this.props.deckAdded(false) 
+    }   
+  }
+
   addDeck = () => {
-    this.props.createDeck({
+    this.props.putDeck({
       [this.state.newDeckTitle]: {
         title: this.state.newDeckTitle,
         questions: []
       }
     })
-
-    this.props.navigation.navigate(
-      'DeckDetail',
-      { deckKey: this.state.newDeckTitle }
-    )    
-
-    this.setState({
-      newDeckTitle: ''
-    })
-
   }
 
   render() {
@@ -54,15 +59,17 @@ class NewDeck extends Component {
   }
 }
 
-function mapStateToProps({ flashcards }) {
+function mapStateToProps({ flashcards, async }) {
   return {
-    flashcards
+    flashcards,
+    async
   }
 }
 
 function mapDispatchToProps (dispatch) {
   return {
-    createDeck: (deck) => dispatch(addDeck(deck))      
+    putDeck: (deck) => dispatch(putDeck(deck)),
+    deckAdded: (flag) => dispatch(deckAdded(flag))      
   }
 }
 

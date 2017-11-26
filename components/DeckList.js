@@ -2,12 +2,24 @@ import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import Deck from './Deck'
 import { connect } from 'react-redux'
+import { fetchDecks } from '../actions'
 
 class DeckList extends Component {
+
+  componentWillMount () {
+    this.props.fetchDecks()
+  }
 
   render() {
     const { flashcards } = this.props
 
+    if(Object.keys(flashcards).length < 1) {
+      return (
+        <View style={styles.container}>
+          <Text>You have not yet created any decks.  Please add a deck.</Text>
+        </View>
+      )
+    }
 
     return (
       <View style={styles.container}>
@@ -39,7 +51,13 @@ function mapStateToProps({ flashcards }) {
   }
 }
 
-export default connect(mapStateToProps)(DeckList)
+function mapDispatchToProps (dispatch) {
+  return {
+    fetchDecks: () => dispatch(fetchDecks())      
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DeckList)
 
 const styles = StyleSheet.create({
   container: {

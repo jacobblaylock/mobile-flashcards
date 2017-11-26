@@ -1,30 +1,14 @@
 import { combineReducers } from 'redux'
-import { ADD_DECK, ADD_QUESTION, CREATE_QUIZ, UPDATE_SCORE } from '../actions'
+import { 
+  LOAD_DECKS,
+  ADD_DECK, 
+  DECK_ADDED,
+  ADD_QUESTION, 
+  CREATE_QUIZ, 
+  UPDATE_SCORE
+} from '../actions'
 
-const deckList = {
-  React: {
-    title: 'React',
-    questions: [
-      {
-        question: 'What is React?',
-        answer: 'A library for managing user interfaces'
-      },
-      {
-        question: 'Where do you make Ajax requests in React?',
-        answer: 'The componentDidMount lifecycle event'
-      }
-    ]
-  },
-  JavaScript: {
-    title: 'JavaScript',
-    questions: [
-      {
-        question: 'What is a closure?',
-        answer: 'The combination of a function and the lexical environment within which that function was declared.'
-      }
-    ]
-  }
-}
+const deckList = {}
 
 const initialQuizState = {
   questions: [],
@@ -32,9 +16,13 @@ const initialQuizState = {
 }
 
 function flashcards (state = deckList, action) {
-  const { type, deck, question, deckKey } = action
+  const { type, decks, deck, question, deckKey } = action
 
   switch (type) {
+    case LOAD_DECKS : 
+      return {
+        ...decks
+      }
     case ADD_DECK :
       return {
         ...state,
@@ -75,7 +63,22 @@ function quiz (state = initialQuizState, action) {
   }
 }
 
+function async (state = {}, action) {
+  const { type, flag } = action
+
+  switch (type) {
+    case DECK_ADDED :
+      return {
+        ...state,
+        deckAdded: flag
+      }
+    default :
+      return state
+  }
+}
+
 export default combineReducers({
   flashcards,
-  quiz
+  quiz,
+  async
 })
