@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
-import { addQuestion } from '../actions'
+import { putQuestion } from '../actions'
 import { NavigationActions } from 'react-navigation'
 import { blue, white, gray } from '../utils/colors'
 
@@ -69,7 +69,7 @@ function mapStateToProps({ flashcards }, { navigation }) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    createQuestion: (question, deckKey) => dispatch(addQuestion(question, deckKey))      
+    createQuestion: (question, deckKey) => dispatch(putQuestion(question, deckKey))      
   }
 }
 

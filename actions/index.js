@@ -1,4 +1,4 @@
-import { getDecks, saveDeckTitle } from '../utils/api'
+import { getDecks, saveDeckTitle, addCardToDeck } from '../utils/api'
 
 export const LOAD_DECKS = 'LOAD_DECKS'
 export const ADD_DECK = 'ADD_DECK'
@@ -52,6 +52,13 @@ export function addQuestion (question, deckKey) {
     deckKey
   }
 }
+
+export const putQuestion = (question, deckKey) => dispatch => (
+  addCardToDeck(deckKey, question)
+    .then((res) => {
+      dispatch(addQuestion(question, deckKey))
+    })
+)
 
 export function createQuiz (questions) {
   return {
