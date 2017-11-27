@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native'
 import Deck from './Deck'
 import { connect } from 'react-redux'
 import { fetchDecks } from '../actions'
@@ -22,7 +22,7 @@ class DeckList extends Component {
     }
 
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         {Object.keys(flashcards).map((key) => {
           return (
             <TouchableOpacity
@@ -40,7 +40,7 @@ class DeckList extends Component {
             </TouchableOpacity>
           )
         })}
-      </View>
+      </ScrollView>
     )
   }
 }
