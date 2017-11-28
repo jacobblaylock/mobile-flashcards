@@ -11,7 +11,7 @@ class Quiz extends Component {
     showAnswer: false
   }
 
-  viewAnswer = () => {
+  flipCard = () => {
     this.setState((prevState) => ({
       ...prevState,
       showAnswer: !prevState.showAnswer
@@ -23,14 +23,14 @@ class Quiz extends Component {
 
     this.setState((prevState) => ({
       index: prevState.index + 1,
-      showAnswer: !prevState.showAnswer
+      showAnswer: false
     }))
   }
 
   incorrect = () => {
     this.setState((prevState) => ({
       index: prevState.index + 1,
-      showAnswer: !prevState.showAnswer
+      showAnswer: false
     }))
   }  
 
@@ -86,7 +86,7 @@ class Quiz extends Component {
                 <Text style={styles.title}>Question #{this.state.index + 1}: {questions[this.state.index].question}</Text>
                 <TouchableOpacity
                   style={styles.submitBtn}
-                  onPress={this.viewAnswer}
+                  onPress={this.flipCard}
                 >            
                   <Text style={styles.submitBtnText}>View Answer</Text>
                 </TouchableOpacity>
@@ -96,18 +96,24 @@ class Quiz extends Component {
                 <Text style={styles.title}>Answer #{this.state.index + 1}: {questions[this.state.index].answer}</Text>
                 <TouchableOpacity
                   style={styles.submitBtn}
-                  onPress={this.correct}
+                  onPress={this.flipCard}
                 >            
-                  <Text style={styles.submitBtnText}>Correct</Text>
-                </TouchableOpacity>       
-                <TouchableOpacity
-                  style={styles.submitBtn}
-                  onPress={this.incorrect}
-                >            
-                  <Text style={styles.submitBtnText}>Incorrect</Text>
-                </TouchableOpacity>                     
+                  <Text style={styles.submitBtnText}>View Question</Text>
+                </TouchableOpacity>                
               </View>
           }
+              <TouchableOpacity
+                style={styles.submitBtn}
+                onPress={this.correct}
+              >            
+                <Text style={styles.submitBtnText}>Correct</Text>
+              </TouchableOpacity>       
+              <TouchableOpacity
+                style={styles.submitBtn}
+                onPress={this.incorrect}
+              >            
+                <Text style={styles.submitBtnText}>Incorrect</Text>
+              </TouchableOpacity>           
           <Text style={styles.score}>{questions.length - this.state.index} questions left.</Text>
       </View>
     )
