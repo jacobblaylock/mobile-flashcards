@@ -6,6 +6,9 @@ import { NavigationActions } from 'react-navigation'
 import { blue, white, gray } from '../utils/colors'
 
 class NewQuestion extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    title: `Add Question to ${navigation.state.params.deckKey}`
+  })
 
   state = {
     newQuestion: '',

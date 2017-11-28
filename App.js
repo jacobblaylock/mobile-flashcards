@@ -1,11 +1,12 @@
 import React from 'react'
-import { StyleSheet, Text, View, Platform } from 'react-native'
+import { StyleSheet, Text, View, Platform, StatusBar } from 'react-native'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import reducer from './reducers'
 import { TabNavigator, StackNavigator } from 'react-navigation'
 import { FontAwesome } from '@expo/vector-icons'
+import { Constants } from 'expo'
 
 import DeckList from './components/DeckList'
 import NewDeck from './components/NewDeck'
@@ -26,8 +27,7 @@ const Tabs = TabNavigator({
   NewDeck: {
     screen: NewDeck,
     navigationOptions: {
-      tabBarLabel: 'New Deck',
-      tabBarIcon: ({ tintColor }) => <FontAwesome name='plus-square' size={30} color={tintColor} />
+      tabBarLabel: 'New Deck'
     }
   }
 }, {
@@ -38,14 +38,7 @@ const Tabs = TabNavigator({
     activeTintColor: white,
     style: {
       height: 56,
-      backgroundColor: blue,
-      shadowColor: 'rgba(0, 0, 0, 0.24)',
-      shadowOffset: {
-        width: 0,
-        height: 3
-      },
-      shadowRadius: 6,
-      shadowOpacity: 1
+      backgroundColor: blue
     }
   }
 })
@@ -93,7 +86,9 @@ export default class App extends React.Component {
     return (
       <Provider store={createStore(reducer, applyMiddleware(thunk))}>
         <View style={styles.container}>
-          <Text style={{height: 20}}>testing</Text>
+          <View style={{ backgroundColor: blue, height: Constants.statusBarHeight }}>
+            <StatusBar translucent backgroundColor={blue}/>
+          </View>
           <MainNavigator/>
         </View>
       </Provider>

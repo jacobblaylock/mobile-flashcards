@@ -2,10 +2,14 @@ import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 import { updateScore, createQuiz } from '../actions'
-import { gray, white, blue } from '../utils/colors'
+import { gray, white, blue, green, red } from '../utils/colors'
 import { clearLocalNotification, setLocalNotification } from '../utils/helpers'
 
 class Quiz extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    title: `Quiz for ${navigation.state.params.deckKey}`
+  })
+
   state = {
     index: 0,
     showAnswer: false
@@ -66,13 +70,13 @@ class Quiz extends Component {
             style={styles.submitBtn}
             onPress={this.restartQuiz}
           >            
-            <Text style={styles.submitBtnText}>Restart Quiz</Text>
+            <Text style={styles.btnText}>Restart Quiz</Text>
           </TouchableOpacity>          
           <TouchableOpacity
             style={styles.submitBtn}
             onPress={this.goBack}
           >            
-            <Text style={styles.submitBtnText}>Back to Deck</Text>
+            <Text style={styles.btnText}>Back to Deck</Text>
           </TouchableOpacity>          
         </View>
       )
@@ -83,37 +87,39 @@ class Quiz extends Component {
           {!this.state.showAnswer
             ? 
               <View>
-                <Text style={styles.title}>Question #{this.state.index + 1}: {questions[this.state.index].question}</Text>
+                <Text style={styles.title}>{questions[this.state.index].question}</Text>
                 <TouchableOpacity
-                  style={styles.submitBtn}
+                  style={styles.flipButton}
                   onPress={this.flipCard}
                 >            
-                  <Text style={styles.submitBtnText}>View Answer</Text>
+                  <Text style={styles.btnText}>View Answer</Text>
                 </TouchableOpacity>
               </View>            
             : 
               <View>
-                <Text style={styles.title}>Answer #{this.state.index + 1}: {questions[this.state.index].answer}</Text>
+                <Text style={styles.title}>{questions[this.state.index].answer}</Text>
                 <TouchableOpacity
-                  style={styles.submitBtn}
+                  style={styles.flipButton}
                   onPress={this.flipCard}
                 >            
-                  <Text style={styles.submitBtnText}>View Question</Text>
+                  <Text style={styles.btnText}>View Question</Text>
                 </TouchableOpacity>                
               </View>
           }
-              <TouchableOpacity
-                style={styles.submitBtn}
-                onPress={this.correct}
-              >            
-                <Text style={styles.submitBtnText}>Correct</Text>
-              </TouchableOpacity>       
-              <TouchableOpacity
-                style={styles.submitBtn}
-                onPress={this.incorrect}
-              >            
-                <Text style={styles.submitBtnText}>Incorrect</Text>
-              </TouchableOpacity>           
+          <View style={styles.buttonGroup}>
+            <TouchableOpacity
+              style={styles.correctButton}
+              onPress={this.correct}
+            >            
+              <Text style={styles.btnText}>Correct</Text>
+            </TouchableOpacity>       
+            <TouchableOpacity
+              style={styles.incorrectButton}
+              onPress={this.incorrect}
+            >            
+              <Text style={styles.btnText}>Incorrect</Text>
+            </TouchableOpacity>           
+          </View>
           <Text style={styles.score}>{questions.length - this.state.index} questions left.</Text>
       </View>
     )
@@ -140,15 +146,20 @@ export default connect(mapStateToProps, mapDispatchToProps)(Quiz)
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     justifyContent: 'center',    
     alignItems: 'center',
     backgroundColor: white,
     borderRadius: 2,
     padding: 20,
-    margin: 10
+    marginTop: 30,
+    marginBottom: 30,
+    marginLeft: 15,
+    marginRight: 15
   },
   title: {
-    fontSize: 30
+    fontSize: 30,
+    alignSelf: 'center'
   },
   score: {
     color: gray,
@@ -167,7 +178,50 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'    
   },
-  submitBtnText: {
+  flipButton: {
+    backgroundColor: gray,
+    padding: 10,    
+    paddingLeft: 30,
+    paddingRight: 30,
+    marginTop: 10,
+    height: 45,
+    width: 180,    
+    borderRadius: 2,
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center'    
+  },  
+  buttonGroup: {
+    marginTop: 40,
+    marginBottom: 40
+  },
+  correctButton: {
+    backgroundColor: green,
+    padding: 10,    
+    paddingLeft: 30,
+    paddingRight: 30,
+    marginTop: 10,
+    height: 45,
+    width: 180,    
+    borderRadius: 2,
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center'    
+  },  
+  incorrectButton: {
+    backgroundColor: red,
+    padding: 10,    
+    paddingLeft: 30,
+    paddingRight: 30,
+    marginTop: 10,
+    height: 45,
+    width: 180,    
+    borderRadius: 2,
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center'    
+  },   
+  btnText: {
     color: white
   }   
 })

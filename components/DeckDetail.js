@@ -5,6 +5,10 @@ import { createQuiz } from '../actions'
 import { gray, white, blue } from '../utils/colors'
 
 class DeckDetail extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    title: `${navigation.state.params.deckKey}`
+    })
+
   state = {
     marginTop: new Animated.Value(500)
   }
@@ -12,7 +16,7 @@ class DeckDetail extends Component {
   componentDidMount () {
     const { marginTop } = this.state
 
-    Animated.spring(marginTop, { toValue: 10, speed: 3 })
+    Animated.spring(marginTop, { toValue: 1, speed: 2 })
       .start()
   }
 
@@ -27,7 +31,8 @@ class DeckDetail extends Component {
     this.props.createQuiz(this.props.deck.questions)
 
     this.props.navigation.navigate(
-      'Quiz'
+      'Quiz',
+      { deckKey: this.props.deckKey }
     )
   }  
 
@@ -37,6 +42,7 @@ class DeckDetail extends Component {
 
     return (
       <Animated.View style={[styles.container, { marginTop }]}>
+        <View style={styles.deck}>
           <Text style={styles.title}>{deck.title}</Text>
           <Text style={styles.count}>{deck.questions ? deck.questions.length : 0} Cards</Text>
           <TouchableOpacity
@@ -50,7 +56,8 @@ class DeckDetail extends Component {
             onPress={this.toStartQuiz}
           >            
             <Text style={styles.submitBtnText}>Start Quiz</Text>
-          </TouchableOpacity>          
+          </TouchableOpacity>         
+        </View>
       </Animated.View>
     )
   }
@@ -75,12 +82,15 @@ export default connect(mapStateToProps, mapDispatchToProps)(DeckDetail)
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     justifyContent: 'center',    
     alignItems: 'center',
-    backgroundColor: white,
     borderRadius: 2,
     padding: 20,
-    margin: 10
+    margin: 10    
+  },
+  deck: {
+    alignItems: 'center'
   },
   title: {
     fontSize: 30
