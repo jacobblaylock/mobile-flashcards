@@ -12,6 +12,7 @@ Download the app from [https://github.com/jacobblaylock/mobile-flashcards.git](h
 ` git clone https://github.com/jacobblaylock/mobile-flashcards.git `
 
 ## Install
+Navigate to the mobile-flashcards directory and execute the following commands:
 
 ```
     yarn install
