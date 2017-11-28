@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 import { updateScore, createQuiz } from '../actions'
 import { gray, white, blue } from '../utils/colors'
+import { clearLocalNotification, setLocalNotification } from '../utils/helpers'
 
 class Quiz extends Component {
   state = {
@@ -45,12 +46,18 @@ class Quiz extends Component {
     this.props.navigation.goBack()
   }
 
+  resetNotifications = () => {
+    clearLocalNotification()
+      .then(setLocalNotification)
+  }
+
 
 
   render () {
     const { questions, score } = this.props
 
     if(this.state.index >= questions.length) {
+      {this.resetNotifications()}
       return (
         <View style={styles.container}>
           <Text style={styles.title}>Your Final Score is:</Text>

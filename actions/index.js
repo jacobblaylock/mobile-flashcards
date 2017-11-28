@@ -18,9 +18,7 @@ export function loadDecks (decks) {
 
 export const fetchDecks = () => dispatch => (
   getDecks()
-  .then(decks => {
-    dispatch(loadDecks(decks))
-  })
+  .then(decks => dispatch(loadDecks(decks)))
 )
 
 export function addDeck (deck) {
@@ -55,9 +53,7 @@ export function addQuestion (question, deckKey) {
 
 export const putQuestion = (question, deckKey) => dispatch => (
   addCardToDeck(deckKey, question)
-    .then((res) => {
-      dispatch(addQuestion(question, deckKey))
-    })
+    .then(dispatch(addQuestion(question, deckKey)))
 )
 
 export function createQuiz (questions) {

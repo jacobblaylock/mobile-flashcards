@@ -7,7 +7,7 @@ export function getDecks () {
     .then(results => JSON.parse(results))
 }
 
-export function getDeck (id) {
+function getDeck (id) {
   return AsyncStorage.getItem(MOBILE_FLASHCARDS_KEY)
     .then(results => {
       const data = JSON.parse(results)
@@ -20,11 +20,7 @@ export function saveDeckTitle (deck) {
 }
 
 export const addCardToDeck = (key, question) => {
-  return AsyncStorage.getItem(MOBILE_FLASHCARDS_KEY)
-    .then(results => {
-      const data = JSON.parse(results)
-      return data[key]
-    })
+  return getDeck(key)
     .then((currentState) => {
       let nextState = {
         ...currentState,

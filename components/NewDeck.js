@@ -11,7 +11,6 @@ class NewDeck extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    console.log(nextProps)
     if(nextProps.async.deckAdded){
       this.props.navigation.navigate(
         'DeckDetail',
